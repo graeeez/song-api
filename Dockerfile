@@ -1,4 +1,4 @@
-# Build stage
+# Build stagee
 FROM container-registry.oracle.com/java/openjdk:21.0.2 AS build
 WORKDIR /app
 COPY src .
