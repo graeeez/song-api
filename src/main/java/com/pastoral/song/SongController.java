@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://song-ui-096r.onrender.com")
 @RequestMapping("/pastoral/songs")
 public class SongController {
 
