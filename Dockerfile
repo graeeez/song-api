@@ -1,13 +1,15 @@
-# Build stagee
-FROM container-registry.oracle.com/java/openjdk:21.0.2 AS build
+# Step 1: Build stage (Use Maven image)
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
-COPY src .
+# Copy the pom.xml and source code
+COPY . .
+# Run the build using the Maven installed in this image
 RUN mvn clean package -DskipTests
-# Package stagee
-FROM container-registry.oracle.com/java/openjdk:21.0.2
+
+# Step 2: Run stage (Use OpenJDK image)
+FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=build /app/target/song-0.0.1-SNAPSHOT.jar app.jar
+# Copy only the built .jar file from the build stage
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
-
-
